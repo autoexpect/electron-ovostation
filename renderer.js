@@ -42,7 +42,7 @@ window.onload = function () {
             append_player(media_url) {
                 if (this.player_td >= 4) {
                     this.player_tr++;
-                    this.player_td = 0;
+                    this.player_td = 1;
                 } else {
                     this.player_td++;
                 }
