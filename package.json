@@ -1,10 +1,12 @@
 {
-  "name": "electron-quick-start",
-  "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "name": "electron-ovostation",
+  "version": "1.2.0",
+  "description": "Electron OVO Station",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build-host": "electron-builder -m",
+    "build-win": "electron-builder build --win portable --x64"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
@@ -14,9 +16,14 @@
     "tutorial",
     "demo"
   ],
-  "author": "GitHub",
+  "author": "rui.crater@gmail.com",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^22.0.0"
+    "electron": "^22.0.0",
+    "electron-builder": "^23.6.0"
+  },
+  "dependencies": {
+    "jquery": "^3.6.3",
+    "moment": "^2.29.4"
   }
 }

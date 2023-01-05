@@ -1,0 +1,23 @@
+appId: "com.cybertty.electron-ovostation"
+
+files:
+  - "**/*"
+  - "!dist/"
+  - "!.github/"
+  - "!.vscode/"
+
+# Mac OS configuration
+mac:
+  icon: "logo.icns"
+
+# Windows configuration
+win:
+  icon: "logo.ico"
+  target:
+    - "zip"
+    - "nsis"
+
+# Config for the windows installer
+nsis:
+  oneClick: true
+  perMachine: true

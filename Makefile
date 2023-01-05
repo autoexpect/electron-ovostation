@@ -6,11 +6,12 @@ COMMIT_SHA1     := $(shell git rev-parse HEAD)
 
 all: debug
 
+package:
+	npm run build-host
+	npm run build-win
+
 debug:
 	npm start
-
-package:
-	npm run make 
 
 install:
 	yarn install
