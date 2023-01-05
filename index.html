@@ -1,0 +1,226 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OVO Station</title>
+  <link rel="stylesheet" href="static/bootstrap/css/bootstrap.css">
+  <script src="static/vuejs/vue.min.js"></script>
+  <script src="static/vuejs/vue-resource.min.js"></script>
+  <script type="text/javascript" src="static/jessibuca/jessibuca.js"></script>
+</head>
+
+<body>
+  <div id="box">
+
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">OVO Station</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">OVO Station</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html">轮训播放 <span class="sr-only">(current)</span></a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-6">
+          <table class="table table-condensed table-bordered" style="white-space: nowrap; text-align: center;">
+            <tbody>
+              <tr>
+                <td><input type="text" class="form-control input-sm"
+                    style="text-align:center; border-radius:0px; height: 25px;" placeholder="流地址" v-model="media_url">
+                </td>
+                <td style="width: 110px;"><button class="btn btn-default btn-xs"
+                    @click="append_player(media_url)">添加通道</button>
+                </td>
+                <td style="width: 110px;"><button class="btn btn-default btn-xs" @click="open_debug">打开调试</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-md-12">
+          <table class="table table-condensed table-bordered">
+            <tbody>
+              <tr>
+                <td style="background-color: black;text-align: center;">
+                  <div style="text-align: center;width: 100%;background-color: black;">
+                    <div style="min-height: 200px;" id="container1_1"></div>
+                  </div>
+                </td>
+                <td style="background-color: black;text-align: center;">
+                  <div style="text-align: center;width: 100%;background-color: black;">
+                    <div style="min-height: 200px;" id="container1_2"></div>
+                  </div>
+                </td>
+                <td style="background-color: black;text-align: center;">
+                  <div style="text-align: center;width: 100%;background-color: black;">
+                    <div style="min-height: 200px;" id="container1_3"></div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style="background-color: black;text-align: center;">
+                  <div style="text-align: center;width: 100%;background-color: black;">
+                    <div style="min-height: 200px;" id="container2_1"></div>
+                  </div>
+                </td>
+                <td style="background-color: black;text-align: center;">
+                  <div style="text-align: center;width: 100%;background-color: black;">
+                    <div style="min-height: 200px;" id="container2_2"></div>
+                  </div>
+                </td>
+                <td style="background-color: black;text-align: center;">
+                  <div style="text-align: center;width: 100%;background-color: black;">
+                    <div style="min-height: 200px;" id="container2_3"></div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td style="background-color: black;text-align: center;">
+                  <div style="text-align: center;width: 100%;background-color: black;">
+                    <div style="min-height: 200px;" id="container3_1"></div>
+                  </div>
+                </td>
+                <td style="background-color: black;text-align: center;">
+                  <div style="text-align: center;width: 100%;background-color: black;">
+                    <div style="min-height: 200px;" id="container3_2"></div>
+                  </div>
+                </td>
+                <td style="background-color: black;text-align: center;">
+                  <div style="text-align: center;width: 100%;background-color: black;">
+                    <div style="min-height: 200px;" id="container3_3"></div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <script src="static/jquery/jquery.min.js"></script>
+  <script src="static/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    window.onload = function () {
+      var vm = new Vue({
+        el: '#box',
+        data: {
+          media_url: "",
+          player_tr: 1,
+          player_td: 0,
+        },
+        mounted: function () {
+          this.init();
+        },
+        methods: {
+          init: function () {
+          },
+
+          play(container, media_url) {
+            let player = new Jessibuca({
+              container: document.getElementById(container),
+              decoder: 'static/jessibuca/decoder-pro.js',
+              videoBuffer: 0.2,
+              autoWasm: true,
+              loadingText: "加载中...",
+              debug: true,
+              showBandwidth: true,
+              operateBtns: {
+                fullscreen: true,
+                screenshot: true,
+                play: true,
+                audio: true,
+              },
+              forceNoOffscreen: true,
+              isNotMute: false,
+              useMSE: true,
+              watermarkConfig: {
+                text: {
+                  content: 'MSE: ' + mse
+                },
+                right: 10,
+                top: 10
+              },
+            });
+            player.play(media_url);
+          },
+
+          append_player(media_url) {
+            if (this.player_td >= 3) {
+              this.player_tr++;
+              this.player_td = 0;
+            } else {
+              this.player_td++;
+            }
+
+            let container_name = "container" + this.player_tr + "_" + this.player_td;
+            this.play(container_name, media_url);
+          },
+
+          open_debug() {
+            console.log(app);
+          },
+
+          get_query_string: function (name) {
+            let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            let r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]);
+            return null;
+          },
+
+          ts_format: function (timestamp) {
+            Date.prototype.format = function (format) {
+              if (!format) {
+                format = "yyyy-MM-dd hh:mm:ss";
+              }
+              let o = {
+                "M+": this.getMonth() + 1,
+                "d+": this.getDate(),
+                "H+": this.getHours(),
+                "h+": this.getHours(),
+                "m+": this.getMinutes(),
+                "s+": this.getSeconds(),
+                "q+": Math.floor((this.getMonth() + 3) / 3),
+                "S": this.getMilliseconds()
+              };
+              if (/(y+)/.test(format)) {
+                format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(
+                  4 - RegExp.$1.length));
+              }
+              for (let k in o) {
+                if (new RegExp("(" + k + ")").test(format)) {
+                  format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? o[
+                    k] : ("00" + o[k]).substr(("" + o[k]).length));
+                }
+              }
+              return format;
+            }
+            return new Date(timestamp).format("yyyy-MM-dd HH:mm:ss")
+          },
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>
